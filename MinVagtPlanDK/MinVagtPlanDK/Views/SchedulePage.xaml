@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MinVagtPlanDK.Views.SchedulePage"
+             x:Name="Page"
+             xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:Viewmodels="clr-namespace:MinVagtPlanDK.ViewModels"
+             xmlns:model="clr-namespace:MinVagtPlanDK.Models"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <Viewmodels:ScheduleViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ListView
+        BackgroundColor="Transparent" 
+        HasUnevenRows="True" 
+        ItemsSource="{Binding ShiftGroups}" 
+        IsGroupingEnabled="True"
+        SeparatorVisibility="None">
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate>
+                <ViewCell Height="50" >
+                    <Label Text ="{Binding Key}" Margin="0,20,0,0" FontSize="Medium" TextColor="Gray" />
+                </ViewCell>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:Shift">
+                <ViewCell>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="20"
+                               HasShadow="True"
+                               BackgroundColor="{Binding schedule.colorHex}">
+                            <StackLayout Orientation="Vertical">
+                                <Label HorizontalOptions="Start"
+                                       FontSize="Large"
+                                       Text="{Binding schedule.company.name}"/>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                    <Label HorizontalOptions="Start"
+                                       FontSize="Medium"
+                                       Text="{Binding start_time}"/>
+                                    <Label HorizontalOptions="Center"
+                                       FontSize="Medium"
+                                       Text=" - "/>
+                                    <Label HorizontalOptions="End"
+                                       FontSize="Medium"
+                                       Text="{Binding end_time}"/>
+                                </StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={x:Reference Page}, Path=BindingContext.ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.Header>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Text="Load Last Month" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference Page}, Path=BindingContext.LoadPreviousMonthCommand}"/>
+            </StackLayout>
+        </ListView.Header>
+        <ListView.Footer>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Text="Load Next Month" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference Page}, Path=BindingContext.LoadNextMonthCommand}"/>
+            </StackLayout>
+        </ListView.Footer>
+    </ListView>
+
+</ContentPage>

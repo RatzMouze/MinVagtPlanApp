@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MinVagtPlanDK.Views.CompaniesPage"
+             x:Name="PageC"
+             xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:Viewmodels="clr-namespace:MinVagtPlanDK.ViewModels"
+             xmlns:model="clr-namespace:MinVagtPlanDK.Models"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <Viewmodels:CompaniesViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ListView
+        CachingStrategy="RecycleElement"
+        BackgroundColor="Transparent" 
+        HasUnevenRows="True" 
+        ItemsSource="{Binding AllCompanies}"
+        SeparatorVisibility="None">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:Company">
+                <ViewCell>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="20"
+                               HasShadow="True">
+                            <StackLayout Orientation="Vertical">
+                                <Label HorizontalOptions="Start"
+                                       FontSize="Large"
+                                       Text="{Binding name}"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={x:Reference PageC}, Path=BindingContext.ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:MinVagtPlanDK.ViewModels" x:DataType="viewmodels:ShiftDetailViewModel"
+             x:Class="MinVagtPlanDK.Views.ShiftDetailPage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="{Binding _Shift.schedule.name}" FontSize="Large"/>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <Label HorizontalOptions="Start"
+                    FontSize="Medium"
+                    Text="{Binding _Shift.start_time}"/>
+                <Label HorizontalOptions="Center"
+                    FontSize="Medium"
+                    Text=" - "/>
+                <Label HorizontalOptions="End"
+                    FontSize="Medium"
+                    Text="{Binding _Shift.end_time}"/>
+            </StackLayout>
+            <Label Text="Beskrivelse:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.description}" FontSize="Small"/>
+            <Label Text="Oprettet:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.created_at}" FontSize="Small"/>
+            <Label Text="Sidst opdateret:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.updated_at}" FontSize="Small"/>
+
+
+            <Label Text="{Binding _Shift.schedule.company.name}" FontSize="Large"/>
+            <Label Text="Beskrivelse:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.schedule.company.description}" FontSize="Small"/>
+            <Label Text="Adresse" FontSize="Medium" />
+            <Label Text="{Binding _Shift.schedule.company.address}" FontSize="Small"/>
+            <Label Text="Postnummer:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.schedule.company.zipcode}" FontSize="Small"/>
+            <Label Text="By:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.schedule.company.city}" FontSize="Small"/>
+            <Label Text="Land:" FontSize="Medium" />
+            <Label Text="{Binding _Shift.schedule.company.country}" FontSize="Small"/>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
